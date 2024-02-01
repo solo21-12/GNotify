@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gNotify-server", "gNotify-server\gNotify-server.csproj", "{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C95725FA-B230-4B64-B21C-BA20124FCA16}
+	EndGlobalSection
+EndGlobal
