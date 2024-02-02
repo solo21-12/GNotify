@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -8,9 +16,15 @@ const LoginScreen = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const handleLogin = () => {
+    // Email format validation using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     // Validation for empty fields
     if (!email.trim()) {
       setEmailError("Email is required");
+      return;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format: abc@xyz.def");
       return;
     } else {
       setEmailError("");
@@ -40,26 +54,37 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.image} />
       <Text style={styles.title}>Login</Text>
-      <View>
-        <TextInput
-          style={[styles.input, { borderColor: emailError ? 'red' : 'gray' }]}
-          placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        />
-        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-        <TextInput
-          style={[styles.input, { borderColor: passwordError ? 'red' : 'gray' }]}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-        <View style={styles.button}>
-          <Button title="Login" onPress={handleLogin} />
-        </View>
-      </View>
+      {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+      <TextInput
+        style={[styles.input, { borderColor: emailError ? "red" : "gray" }]}
+        placeholder="Email"
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+      />
+      {passwordError ? (
+        <Text style={styles.errorText}>{passwordError}</Text>
+      ) : null}
+      <TextInput
+        style={[styles.input, { borderColor: passwordError ? "red" : "gray" }]}
+        placeholder="Password"
+        secureTextEntry
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+      />
+      <TouchableOpacity
+        style={styles.loginScreenButton}
+        onPress={handleLogin}
+        underlayColor="#fff"
+      >
+        <Text style={styles.loginText}>Login</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.registerText}>
+        If you don't have an account.{" "}
+        <TouchableOpacity onPress={() => alert("Redirect to Register page")}>
+          <Text style={styles.linkText}>Register</Text>
+        </TouchableOpacity>
+      </Text>
     </View>
   );
 };
@@ -67,39 +92,70 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+    // use a linear gradient for the background color
+    background: "linear-gradient(to right, #00d2ff, #3a7bd5)",
   },
   image: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    marginBottom: 20,
+    width: 200,
+    height: 200,
+    alignSelf: "center",
+    margin: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-  },
-  input: {
-    width: 250,
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 5,
-    padding: 10,
-  },
-  button: {
-    backgroundColor: "#ff5400",
-    width: 250,
-    alignSelf: 'center',
-    borderRadius: 10,
-    marginTop: 20,
+    color: "#ff6738",
+    textAlign: "center",
+    // use a custom font for the title
+    fontFamily: "Roboto",
   },
   errorText: {
-    color: 'red',
-    marginBottom: 10,
+    fontSize: 12,
+    color: "red",
+    textAlign: "center",
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    padding: 10,
+    margin: 10,
+    alignSelf: "center",
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: "gray",
+  },
+  loginScreenButton:{
+    width: "80%",
+    margin:10,
+    paddingTop:10,
+    paddingBottom:10,
+    backgroundColor:'#ff6738',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    alignSelf: "center",
+
+  },
+  loginText:{
+      color:'#fff',
+      textAlign:'center',
+      paddingLeft : 10,
+      paddingRight : 10
+  },
+  registerText: {
+    fontSize: 16,
+    color: "#000",
+    textAlign: "center",
+    marginTop: 30,
+
+  },
+  linkText: {
+    fontSize: 16,
+    color: "#ff6738",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });
 
