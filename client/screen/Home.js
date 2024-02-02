@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   FlatList,
 } from "react-native";
 
@@ -19,6 +18,7 @@ const HomeScreen = ({ navigation }) => {
   const vehicles = [
     { id: 1, plateNumber: "AB12345" },
     { id: 2, plateNumber: "CD67891" },
+    { id: 3, plateNumber: "CD67891" },
     // Add more vehicles as needed
   ];
 
@@ -30,73 +30,86 @@ const HomeScreen = ({ navigation }) => {
 
   const handleSetNotification = () => {
     // Implement logic to set notifications for vehicles
-    alert("Set Notification for Vehicles");
+    navigation.navigate("AddVehicle");
+
   };
 
   const handleViewAllVehicles = () => {
     // Navigate to the AllVehiclesScreen
-    navigation.navigate("AllVehicles");
+    navigation.navigate("Vehicles");
   };
 
+  const renderVehicleItem = ({ item }) => (
+    <View style={styles.vehicleItem}>
+      <Text style={styles.notificationButtonText}>{item.plateNumber}</Text>
+    </View>
+  );
+
+  const renderReminderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.reminderListButton}
+      onPress={handleSetNotification}
+    >
+      <Text style={styles.reminderListButtonText}>{item.text}</Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <Image source={require("../assets/logo.png")} style={styles.image} />
+    <FlatList
+      data={vehicles}
+      style= {styles.container}
+      keyExtractor={(item) => item.id.toString()}
+      ListHeaderComponent={
+        <>
+          <Image
+            source={require("../assets/logo.png")}
+            style={styles.image}
+          />
 
-      <View style={styles.userInfoContainer}>
-        <Text style={styles.userInfoText}>Name: {userInfo.name}</Text>
-        <Text style={styles.userInfoText}>
-          Phone Number: {userInfo.phoneNumber}
-        </Text>
-      </View>
-      <View style={styles.horizontalLine} />
-
-      <TouchableOpacity
-        style={styles.notificationButton}
-        onPress={handleSetNotification}
-      >
-        <Text style={styles.notificationButtonText}>
-          Set Notification for Vehicles
-        </Text>
-      </TouchableOpacity>
-
-      <View style={styles.horizontalLine} />
-
-      <Text style={styles.sectionTitle}>Vehicles List</Text>
-      <FlatList
-        data={vehicles}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.vehicleItem}>
-            <Text style={styles.notificationButtonText}>
-              {item.plateNumber}
+          <View style={styles.userInfoContainer}>
+            <Text style={styles.userInfoText}>Name: {userInfo.name}</Text>
+            <Text style={styles.userInfoText}>
+              Phone Number: {userInfo.phoneNumber}
             </Text>
           </View>
-        )}
-      />
+          <View style={styles.horizontalLine} />
 
-      <TouchableOpacity
-        style={styles.notificationButton}
-        onPress={handleViewAllVehicles}
-      >
-        
-        <Text style={styles.moreButtonText}>View All Vehicles</Text>
-      </TouchableOpacity>
-        
-      <View style={styles.horizontalLine} />
-      <Text style={styles.sectionTitle}>Latest Reminders</Text>
-      <FlatList
-        data={reminders}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.reminderListButton}
+            style={styles.notificationButton}
             onPress={handleSetNotification}
           >
-            <Text style={styles.reminderListButtonText}>{item.text}</Text>
+            <Text style={styles.notificationButtonText}>
+              Set Notification for Vehicles
+            </Text>
           </TouchableOpacity>
-        )}
-      />
-    </ScrollView>
+
+          <View style={styles.horizontalLine} />
+
+          <Text style={styles.sectionTitle}>Vehicles List</Text>
+        </>
+      }
+      ListFooterComponent={
+        <>
+          <TouchableOpacity
+            style={styles.notificationButton}
+            onPress={handleViewAllVehicles}
+          >
+            <Text style={styles.moreButtonText}>View All Vehicles</Text>
+          </TouchableOpacity>
+
+          <View style={styles.horizontalLine} />
+          <View style = {styles.reminder}>
+          <Text style={styles.sectionTitle}>Latest Reminders</Text>
+          <FlatList
+            data={reminders}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderReminderItem}
+          />
+          </View>
+        </>
+      }
+      renderItem={renderVehicleItem}
+    />
   );
 };
 
@@ -146,6 +159,9 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     margin: 10,
+  },
+  reminder:{
+    marginBottom : 50
   },
   reminderListButton: {
     backgroundColor: "#ff6738",
