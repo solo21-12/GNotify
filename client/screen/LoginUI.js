@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
-  Button,
-  StyleSheet,
   Image,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
+import CustomInput from "../component/InputField"; // Import the CustomInput component
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -54,23 +53,24 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <Image source={require("../assets/logo.png")} style={styles.image} />
       <Text style={styles.title}>Login</Text>
-      {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-      <TextInput
-        style={[styles.input, { borderColor: emailError ? "red" : "gray" }]}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
+
+      {/* Use CustomInput for Email */}
+      <CustomInput
         value={email}
+        onChangeText={(text) => setEmail(text)}
+        placeholder="Email"
+        error={emailError}
       />
-      {passwordError ? (
-        <Text style={styles.errorText}>{passwordError}</Text>
-      ) : null}
-      <TextInput
-        style={[styles.input, { borderColor: passwordError ? "red" : "gray" }]}
+
+      {/* Use CustomInput for Password */}
+      <CustomInput
+        value={password}
+        onChangeText={(text) => setPassword(text)}
         placeholder="Password"
         secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
+        error={passwordError}
       />
+
       <TouchableOpacity
         style={styles.loginScreenButton}
         onPress={handleLogin}
