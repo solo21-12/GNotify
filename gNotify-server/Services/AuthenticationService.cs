@@ -55,7 +55,7 @@ public class AuthenticationService
         Message = "Login successful",
         Email = user.Email,
         Success = true,
-        UserId = user.UserName
+        UserId = user.Id
        };
       }
       catch (Exception e)
