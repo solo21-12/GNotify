@@ -26,7 +26,14 @@ public class AuthenticationService
        {
         return new LoginResponse{Message = "Invalid email/password",Success = false};
        }
-    
+       
+       var isPasswordValid = await _userManager.CheckPasswordAsync(user, request.Password);
+
+       if (!isPasswordValid)
+       {
+        return new LoginResponse { Message = "Invalid email/password", Success = false };
+       }
+       
        var claim = new List<Claim> {
         new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
         new Claim(ClaimTypes.Name, user.UserName),
@@ -80,7 +87,12 @@ public class AuthenticationService
        userExist = new ApplicationUser
        {
         UserName = requestDto.Email,
-        Email = requestDto.Email
+        Email = requestDto.Email,
+        FirstName = requestDto.FirstName,
+        LastName = requestDto.LastName,
+        MiddleName = requestDto.MiddleName,
+        Gender = requestDto.Gender,
+        PhoneNumber = requestDto.PhoneNumber,
        };
        
        var result = await _userManager.CreateAsync(userExist, requestDto.Password);
@@ -96,7 +108,7 @@ public class AuthenticationService
      
        return new RegisterResponse
        {
-        Message = "password successfull set ",
+        Message = "user created successfully",
         Success = true
        };
      
@@ -112,5 +124,4 @@ public class AuthenticationService
        };
       }
      }
-
 }

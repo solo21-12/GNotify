@@ -9,9 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using gNotify_server.Services;
+
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -61,7 +60,6 @@ builder.Services.AddAuthentication(options =>
 }).AddJwtBearer(jwt => {
     var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value);
     jwt.SaveToken = true;
-
     jwt.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateIssuerSigningKey = true,
@@ -81,8 +79,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
