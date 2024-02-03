@@ -4,31 +4,18 @@ networks:
     driver: bridge
 
 services:
-  client:
-    image: docker.io/library/goma-client 
-    depends_on:
-      - server
-    container_name: "gnotify-client"
-    ports:
-      - "3000:3000"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    networks:
-      - dev
-
-  server:
-    image: docker.io/library/goma
-    depends_on:
-      - mongodb_container
-    container_name: "gnotify-service"
-    ports:
-      - "8081:80"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    networks:
-      - dev
+  # server:
+  #   image: docker.io/library/auth-image
+  #   depends_on:
+  #     - mongodb_container
+  #   container_name: "gnotify-service"
+  #   ports:
+  #     - "8081:80"
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - dev
 
   mongodb_container:
     image: mongo:latest
@@ -36,7 +23,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongodb_data_container:/data/db
     networks:
