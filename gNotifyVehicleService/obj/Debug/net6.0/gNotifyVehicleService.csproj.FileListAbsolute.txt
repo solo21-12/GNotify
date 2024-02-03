@@ -38,3 +38,14 @@
 /home/dawit/projects/current/Gnotify/gNotifyVehicleService/obj/Debug/net6.0/ref/gNotifyVehicleService.dll
 /home/dawit/projects/current/Gnotify/gNotifyVehicleService/obj/Debug/net6.0/gNotifyVehicleService.pdb
 /home/dawit/projects/current/Gnotify/gNotifyVehicleService/obj/Debug/net6.0/gNotifyVehicleService.genruntimeconfig.cache
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/home/dawit/projects/current/Gnotify/gNotifyVehicleService/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll

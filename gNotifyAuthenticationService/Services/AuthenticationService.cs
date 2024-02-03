@@ -43,7 +43,7 @@ public class AuthenticationService
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
        };
        
-       var audiences = new List<string> { "https://localhost:7138", "audience2" };
+       var audiences = new List<string> { "https://localhost:7138", "https://localhost:7269" };
        
        var issuer =  "https://localhost:7138";
        // var audience = "https://localhost:7138";
@@ -58,7 +58,7 @@ public class AuthenticationService
         expires: expires,
         signingCredentials: signingCredentials,
         issuer:issuer,
-        audience:String.Join(",",audiences)
+        audience:"https://localhost:7138"
        );
        return new LoginResponse
        {
