@@ -12,6 +12,7 @@ import NotificationsScreen from "./screen/Notification";
 import AddVehicleScreen from "./screen/AddVehicles";
 import RegistrationScreen from "./screen/RegistrationUI";
 import ProfileScreen from "./screen/Profile";
+import LoginScreen from "./screen/LoginUI";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,7 +83,7 @@ registerNNPushToken(19478, '49UfF0b0Eg4UDErW9b1fz7');
             headerShown: false,
           }}
           name="Home"
-          component={HomeStack}
+          component={LoginScreen}
         />
         <Tab.Screen
           options={{
