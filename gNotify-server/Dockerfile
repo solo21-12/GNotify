@@ -16,5 +16,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 as production-env
 WORKDIR /app
 
 COPY --from=build-env /app/out .
-
 CMD ["dotnet", "gNotify-server.dll"]
