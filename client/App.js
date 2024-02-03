@@ -1,4 +1,4 @@
-// App.js or index.js
+// App.js
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -6,6 +6,7 @@ import HomeScreen from './screen/Home';
 import VehiclesScreen from './screen/Vehicles';
 import NotificationsScreen from './screen/Notification';
 import AddVehicleScreen from './screen/AddVehicles';
+import RegistrationScreen from './screen/RegistrationUI'; 
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Register" component={RegistrationScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Vehicles" component={VehiclesScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
