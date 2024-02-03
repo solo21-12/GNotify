@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Picker } from "@react-native-picker/picker";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const AddVehicleScreen = () => {
@@ -38,44 +44,96 @@ const AddVehicleScreen = () => {
     }
   };
 
-  const handleAddVehicle = () => {
-    // Handle logic to add the vehicle and schedule the notification
-    // For demonstration purposes, we'll just display the entered data
-    alert(
-      `ID: ${vehicleData.id}\nVehicle Plate Number: ${vehicleData.vehiclePlateNumber}\nVehicle Renewal Date: ${vehicleData.vehicleRenewalDate}\nRoad Fund Renewal Date: ${vehicleData.roadFundRenewalDate}\nOther Document Renewal Date: ${vehicleData.otherDocumentRenewalDate}`
-    );
+  const renderDateText = (dateType) => {
+    const selectedDate = vehicleData[dateType];
+    return selectedDate ? selectedDate.toLocaleDateString() : `Select ${dateType}`;
+  };
 
-    // Increment ID counter for the next entry
-    setIdCounter((prevId) => prevId + 1);
-    // Reset other data for the next entry
-    setVehicleData({
-      id: idCounter + 1,
-      vehiclePlateNumber: "",
-      vehicleRenewalDate: new Date(),
-      roadFundRenewalDate: new Date(),
-      otherDocumentRenewalDate: new Date(),
+  const simulateSuccessfulResponse = () => {
+    // Simulate a successful response with a delay
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ ok: true });
+      }, 1000); // Simulate a delay of 1 second
     });
+  };
+
+  const handleAddVehicle = async () => {
+    try {
+      // Prepare the data to send
+      const requestData = {
+        id: idCounter + 1,
+        vehiclePlateNumber: vehicleData.vehiclePlateNumber,
+        vehicleRenewalDate: vehicleData.vehicleRenewalDate.toISOString(), // Convert to ISO string
+        roadFundRenewalDate: vehicleData.roadFundRenewalDate.toISOString(),
+        // Add other fields as needed
+      };
+  
+      // Simulate a successful response
+      const response = await simulateSuccessfulResponse();
+
+      // const response = await fetch('YOUR_BACKEND_API_ENDPOINT', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(requestData),
+      // });
+  
+      if (response.ok) {
+        // Backend successfully received the data
+        alert('Vehicle added successfully!' + requestData.roadFundRenewalDate);
+      } else {
+        // Handle error case
+        alert('Failed to add vehicle. Please try again.');
+      }
+  
+      // Increment ID counter for the next entry
+      setIdCounter((prevId) => prevId + 1);
+  
+      // Reset other data for the next entry
+      setVehicleData({
+        id: idCounter + 2,
+        vehiclePlateNumber: "",
+        vehicleRenewalDate: new Date(),
+        roadFundRenewalDate: new Date(),
+        otherDocumentRenewalDate: new Date(),
+      });
+    } catch (error) {
+      console.error('Error adding vehicle:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Add Vehicle</Text>
 
-
       <TextInput
         style={styles.input}
         placeholder="Vehicle Plate Number"
         value={vehicleData.vehiclePlateNumber}
-        onChangeText={(text) => setVehicleData({ ...vehicleData, vehiclePlateNumber: text })}
+        onChangeText={(text) =>
+          setVehicleData({ ...vehicleData, vehiclePlateNumber: text })
+        }
       />
 
       {/* Date Input for Vehicle Renewal */}
-      <TouchableOpacity
-        style={styles.datePickerButton}
-        onPress={() => showDatePicker("vehicleRenewalDate")}
-      >
-        <Text>Select Vehicle Renewal Date</Text>
-      </TouchableOpacity>
+      <View style={styles.dateInputContainer}>
+        <Text style={styles.label}>Insurance Last Paid Date</Text>
+        <TouchableOpacity
+          style={styles.datePickerButton}
+          onPress={() => showDatePicker("vehicleRenewalDate")}
+        >
+          <Text>{renderDateText("vehicleRenewalDate")}</Text>
+          <FontAwesome5
+            name="calendar-alt"
+            size={20}
+            color="#000"
+            style={styles.dateIcon}
+          />
+        </TouchableOpacity>
+      </View>
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -84,14 +142,37 @@ const AddVehicleScreen = () => {
         onCancel={hideDatePicker}
       />
 
-      {/* Add more date inputs as needed for other renewals */}
-      {/* Example: Road Fund Renewal */}
-      <TouchableOpacity
-        style={styles.datePickerButton}
-        onPress={() => showDatePicker("roadFundRenewalDate")}
-      >
-        <Text>Select Road Fund Renewal Date</Text>
-      </TouchableOpacity>
+      <View style={styles.dateInputContainer}>
+        <Text style={styles.label}>Road Fund Last Paid Date</Text>
+        <TouchableOpacity
+          style={styles.datePickerButton}
+          onPress={() => showDatePicker("roadFundRenewalDate")}
+        >
+          <Text>{renderDateText("roadFundRenewalDate")}</Text>
+          <FontAwesome5
+            name="calendar-alt"
+            size={20}
+            color="#000"
+            style={styles.dateIcon}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.dateInputContainer}>
+        <Text style={styles.label}>Bolo Renewal Last Paid Date</Text>
+        <TouchableOpacity
+          style={styles.datePickerButton}
+          onPress={() => showDatePicker("roadFundRenewalDate")}
+        >
+          <Text>{renderDateText("roadFundRenewalDate")}</Text>
+          <FontAwesome5
+            name="calendar-alt"
+            size={20}
+            color="#000"
+            style={styles.dateIcon}
+          />
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddVehicle}>
         <Text style={styles.addButtonText}>Add Vehicle</Text>
@@ -101,70 +182,60 @@ const AddVehicleScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: "#fff",
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: "bold",
-      color: "#ff6738",
-      textAlign: "center",
-      marginBottom: 20,
-    },
-    input: {
-      height: 40,
-      borderColor: "gray",
-      borderWidth: 1,
-      marginBottom: 20,
-      padding: 10,
-      borderRadius: 5,
-    },
-    label: {
-      fontSize: 16,
-      marginBottom: 10,
-    },
-    picker: {
-      height: 40,
-      marginBottom: 20,
-      borderRadius: 5,
-      borderWidth: 1,
-      borderColor: "gray",
-    },
-    pickerContainer: {
-      height: 40,
-      borderRadius: 5,
-      borderWidth: 1,
-      borderColor: "gray",
-      marginBottom: 20,
-      overflow: "hidden", // Ensure border is visible
-    },
-    pickerItem: {
-      fontSize: 16,
-    },
-    datePickerButton: {
-      height: 40,
-      borderWidth: 1,
-      borderColor: "gray",
-      borderRadius: 5,
-      marginBottom: 20,
-      justifyContent: "center",
-      padding: 10,
-    },
-    addButton: {
-      backgroundColor: "#ff6738",
-      padding: 15,
-      borderRadius: 5,
-      marginTop: 20,
-    },
-    addButtonText: {
-      color: "#fff",
-      textAlign: "center",
-      fontSize: 18,
-      fontWeight: "bold",
-    },
-  });
-  
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+    paddingTop: 50,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#ff6738",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 10,
+    borderRadius: 5,
+  },
+  datePickerButton: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    justifyContent: "center",
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  dateIcon: {
+    marginLeft: 10,
+  },
+  addButton: {
+    backgroundColor: "#ff6738",
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  addButtonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  dateInputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+});
 
 export default AddVehicleScreen;
