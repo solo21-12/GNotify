@@ -74,6 +74,7 @@ public class AuthenticationService
       try
       {
        var userExist = await _userManager.FindByEmailAsync(requestDto.Email);
+       
      
        if (userExist != null)
        {
@@ -124,4 +125,28 @@ public class AuthenticationService
        };
       }
      }
+
+
+     public async Task<ProfileUpdateResponse> UpdateProfile(ProfileUpdateRequest profileUpdateRequest)
+     {
+      var user = await _userManager.FindByIdAsync(profileUpdateRequest.Id);
+
+      if (user != null)
+      {
+       user.PhoneNumber = profileUpdateRequest.PhoneNumber;
+       user.FirstName = profileUpdateRequest.FirstName;
+       user.LastName = profileUpdateRequest.LastName;
+       user.MiddleName = profileUpdateRequest.MiddleName;
+       user.Gender = profileUpdateRequest.Gender;
+
+       var updateResult = await _userManager.UpdateAsync(user);
+
+       return updateResult.Succeeded
+        ? new ProfileUpdateResponse { Message = "Profile successfully updated", Success = true }
+        : new ProfileUpdateResponse { Message = "Error updating user profile", Success = false };
+      }
+
+      return new ProfileUpdateResponse { Message = "Invalid user id", Success = false };
+     }
+
 }

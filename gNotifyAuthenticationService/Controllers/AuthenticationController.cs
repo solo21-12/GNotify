@@ -18,7 +18,6 @@ public class AuthenticationController:ControllerBase
         _authenticationService = authenticationService;
     }
     
-    
     [HttpPost]
     [Route("register")]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(RegisterResponse))]
