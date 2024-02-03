@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gNotify-server", "gNotify-server\gNotify-server.csproj", "{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gNotifyAuthenticationService", "gNotifyAuthenticationService\gNotifyAuthenticationService.csproj", "{BE42B22F-FF6C-4B1C-9A2C-A0427779B61C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
