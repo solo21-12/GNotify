@@ -1,3 +1,4 @@
+using gNotify_server.config;
 using gNotify_server.Dtos;
 using gNotify_server.Model;
 
@@ -12,42 +13,52 @@ using Microsoft.IdentityModel.Tokens;
 
 public class AuthenticationService
 {
+ public AuthenticationService(UserManager<ApplicationUser> userManager, JwtConfig jwtConfig)
+ {
+  _userManager = userManager;
+  _jwtConfig = jwtConfig;
+ }
+
  private readonly UserManager<ApplicationUser> _userManager;
-
- public AuthenticationService(UserManager<ApplicationUser> userManager) => _userManager = userManager;
-
+ private readonly JwtConfig _jwtConfig;
+ 
      public async Task<LoginResponse> LoginAsync(LoginRequest request)
      {
       try
       {
        var user = await _userManager.FindByEmailAsync(request.Email);
-       
        if (user is null)
        {
         return new LoginResponse{Message = "Invalid email/password",Success = false};
        }
-       
        var isPasswordValid = await _userManager.CheckPasswordAsync(user, request.Password);
-
        if (!isPasswordValid)
        {
         return new LoginResponse { Message = "Invalid email/password", Success = false };
        }
        
        var claim = new List<Claim> {
-        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.UserName),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+        new Claim(JwtRegisteredClaimNames.Email, user.Email),
        };
-      
-       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("6jxUdXPi6wHzBo1X1hIQgwCDU7EMyEUxlFYcJUc"));
-       var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+       
+       var audiences = new List<string> { "https://localhost:7138", "audience2" };
+       
+       var issuer =  "https://localhost:7138";
+       // var audience = "https://localhost:7138";
+       var secret = "6jxUdXPi6wHzBo1X1hIQgwCDU7EMyEUxlFYcJUc";
        var expires = DateTime.Now.AddMinutes(30);
+       
+       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+       var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+       
        var token = new JwtSecurityToken(
         claims: claim,
         expires: expires,
-        signingCredentials: signingCredentials
+        signingCredentials: signingCredentials,
+        issuer:issuer,
+        audience:String.Join(",",audiences)
        );
        return new LoginResponse
        {
@@ -125,8 +136,6 @@ public class AuthenticationService
        };
       }
      }
-
-
      public async Task<ProfileUpdateResponse> UpdateProfile(ProfileUpdateRequest profileUpdateRequest)
      {
       var user = await _userManager.FindByIdAsync(profileUpdateRequest.Id);

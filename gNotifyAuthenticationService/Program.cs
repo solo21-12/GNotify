@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using gNotify_server.Services;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -16,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+builder.Services.AddSingleton<JwtConfig>();
 
 // Add serializer 
 BsonSerializer.RegisterSerializer(new GuidSerializer(MongoDB.Bson.BsonType.String));
@@ -64,9 +67,11 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false, // for dev purpose only
-        ValidateAudience = false, //for dev only
-        RequireExpirationTime = false, // for dev only
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = "https://localhost:7138", 
+        ValidAudience = "https://localhost:7138", 
+        RequireExpirationTime = true, 
         ValidateLifetime = true
     };
 });
@@ -80,6 +85,13 @@ builder.Services.AddCors(options => {
         policyBuilder.AllowAnyMethod();
     });
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
 
 
 var app = builder.Build();
@@ -89,7 +101,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseAuthorization();
+
 app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
