@@ -7,16 +7,20 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handleAddVehicle = () => {
-    navigation.navigate("AddVehicle");
+    navigation.navigate("AddVehicleScreen");
   };
 
   const handleViewAllVehicles = () => {
-    navigation.navigate("Vehicles");
+    navigation.navigate("VehiclesScreen");
+  };
+
+  const handleNotificationPress = () => {
+    navigation.navigate("NotificationsScreen");
   };
 
   return (
     <FlatList
-      data={[{ id: 1, plateNumber: "AB12345" }]} // You can add more data if needed
+      data={[{ id: 1, plateNumber: "AB12345" }]}
       style={styles.container}
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={
@@ -28,14 +32,14 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.horizontalLine} />
           <View style={styles.body}>
             <TouchableOpacity style={styles.button} onPress={handleAddVehicle}>
-              <Text style={styles.buttonText}>Add Vehicles</Text>
+              <Text style={styles.buttonText}>Add Vehicle</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={handleViewAllVehicles}>
-              <Text style={styles.buttonText}>Vehicles List</Text>
+              <Text style={styles.buttonText}>View Vehicles</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleViewAllVehicles}>
+            <TouchableOpacity style={styles.button} onPress={handleNotificationPress}>
               <Text style={styles.buttonText}>Notifications</Text>
             </TouchableOpacity>
           </View>
@@ -50,16 +54,22 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
+    padding : 20,
+    width: "100%",
+    marginTop: 100
   },
   body: {
     margin: 10,
     padding: 10,
-    backgroundColor: "#ff6738",
-    display: "flex",
+    backgroundColor: "#007bff",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20,
-    height: "70%",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   userInfoContainer: {
     marginBottom: 20,
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   userInfoText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#000",
     marginBottom: 10,
   },
@@ -79,9 +89,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: "80%",
     alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
   buttonText: {
-    color: "#000",
+    color: "#007bff",
     textAlign: "center",
     fontSize: 16,
   },
