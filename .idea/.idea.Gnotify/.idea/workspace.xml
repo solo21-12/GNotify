@@ -7,22 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c4e90e0-98b1-4a99-b15c-ac81da853602" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/Controllers/AuthenticationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/Controllers/AuthenticationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/Services/AuthenticationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/Services/AuthenticationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/gNotifyAuthenticationService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/gNotifyAuthenticationService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/gNotifyAuthenticationService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/gNotifyAuthenticationService.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/ref/gNotifyAuthenticationService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/bin/Debug/net6.0/ref/gNotifyAuthenticationService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/config/JwtConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/config/JwtConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/ref/gNotifyAuthenticationService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/ref/gNotifyAuthenticationService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/staticwebassets.pack.sentinel" afterDir="false" />
-    </list>
+    <list default="true" id="9c4e90e0-98b1-4a99-b15c-ac81da853602" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,6 +80,7 @@
       <workItem from="1706904612941" duration="315000" />
       <workItem from="1706905525158" duration="1829000" />
       <workItem from="1706961045796" duration="5849000" />
+      <workItem from="1706993873630" duration="505000" />
     </task>
     <servers />
   </component>
