@@ -45,6 +45,7 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true
     };
 });
+
 builder.Services.AddAuthorization(options =>
 {
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
