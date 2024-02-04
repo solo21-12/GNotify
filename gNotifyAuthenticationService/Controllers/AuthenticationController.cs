@@ -51,4 +51,15 @@ public class AuthenticationController:ControllerBase
         var result = await _authenticationService.UpdateProfile(profileUpdateRequest);
         return result.Success ? Ok(result) : BadRequest(result.Message);
     }
+
+    [Authorize]
+    [HttpGet]
+    [Route("user/{id}")]
+    // [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(User))]
+    public async Task<IActionResult> GetUser(string id)
+    {
+        var user = await _authenticationService.Get(id);
+        return user.Success ? Ok(user) : NotFound(user);
+    }
+
 }

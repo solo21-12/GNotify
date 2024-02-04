@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "FDE8s7FosL9UB/DJlkXLaPnLLfza/AqFgxQm0NRdLx0=",
+  "Source": "gNotifyApiGateway",
+  "BasePath": "_content/gNotifyApiGateway",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

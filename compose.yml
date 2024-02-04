@@ -4,16 +4,29 @@ networks:
     driver: bridge
 
 services:
-  # server:
-  #   image: docker.io/library/auth-image
+  # goma-vehicle:
+  #   image: docker.io/library/goma-vehicle
   #   depends_on:
   #     - mongodb_container
-  #   container_name: "gnotify-service"
+  #   container_name: "gnotify-vehicle"
   #   ports:
-  #     - "8081:80"
+  #     - "8001:8003"
   #   build:
   #     context: .
-  #     dockerfile: Dockerfile
+  #     dockerfile: ./gNotifyVehicleService/Dockerfile
+  #   networks:
+  #     - dev
+
+  # goma-auth:
+  #   image: docker.io/library/goma-auth
+  #   depends_on:
+  #     - mongodb_container
+  #   container_name: "gnotify-auth"
+  #   ports:
+  #     - "8000:8002"
+  #   build:
+  #     context: .
+  #     dockerfile: ./gNotifyAuthenticationService/Dockerfile
   #   networks:
   #     - dev
 

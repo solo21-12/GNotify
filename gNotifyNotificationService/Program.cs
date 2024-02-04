@@ -1,36 +1,27 @@
 using System.Text;
 using gNotifyNotificationService.Config;
 using gNotifyNotificationService.Services;
-using Hangfire;
-using Hangfire.SQLite;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHangfire(config => config
-    .UseSimpleAssemblyNameTypeSerializer()
-    .UseRecommendedSerializerSettings()
-    .UseSQLiteStorage("Data Source=/home/dawit/projects/current/Gnotify/gNotifyNotificationService/hangfire.db")
-);
-
-builder.Services.AddHangfireServer();
-builder.Services.AddTransient<IServiceManagementService, ServiceManagement>();
+// builder.Services.AddTransient<IServiceManagementService, ServiceManagement>();
 builder.Services.AddTransient<NotificationService>();
-
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("MongodbConnectionSettings"));
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+builder.Services.AddNotification();
 BsonSerializer.RegisterSerializer(new GuidSerializer(MongoDB.Bson.BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeSerializer(MongoDB.Bson.BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(MongoDB.Bson.BsonType.String));
 
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
 builder.Services.AddAuthentication(options =>
 {
@@ -73,11 +64,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.UseHangfireDashboard();
-app.MapHangfireDashboard();
 
-GlobalConfiguration.Configuration.UseSQLiteStorage("Data Source=/home/dawit/projects/current/Gnotify/gNotifyNotificationService/hangfire.db");
-
-
-RecurringJob.AddOrUpdate<IServiceManagementService>(service => service.SendEmail(),"0 * * ? * *");
 app.Run();

@@ -1,6 +1,9 @@
+using Quartz;
+
 namespace gNotifyNotificationService.Services
 {
-    public class ServiceManagement : IServiceManagementService
+    [DisallowConcurrentExecution]
+    public class ServiceManagement : IJob
     {
         private readonly NotificationService _notificationService;
         private readonly ILogger<ServiceManagement> _logger;
@@ -11,7 +14,15 @@ namespace gNotifyNotificationService.Services
             _logger = logger;
         }
 
-        public async Task SendEmail()
+        public async Task Execute(IJobExecutionContext context)
+        {
+            await SendEmail();
+            UpdateDataBase();
+
+            _logger.LogInformation("Operating {UtcNow}", DateTime.UtcNow);
+        }
+
+        private async Task SendEmail()
         {
             try
             {
@@ -35,7 +46,7 @@ namespace gNotifyNotificationService.Services
             }
         }
 
-        public void UpdateDataBase()
+        private void UpdateDataBase()
         {
             try
             {
