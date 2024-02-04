@@ -37,7 +37,7 @@ const RegistrationScreen = ({ navigation }) => {
       if (response.status === 200) {
         console.log('Registration successful:', response.data);
         // Optionally, you can navigate to the login screen or any other screen upon successful registration
-        navigation.navigate('Login');
+        navigation.navigate('LoginScreen');
       } else {
         console.error('Registration failed:', response.data.message);
       }
@@ -116,6 +116,10 @@ const RegistrationScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.registerButton} onPress={handleRegistration}>
         <Text style={styles.registerButtonText}>Register</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
+          <Text style={styles.linkText}>Already have an account : Login</Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -156,13 +160,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff6738',
     padding: 15,
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 3,
   },
   registerButtonText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  linkText: {
+    fontSize: 16,
+    color: "#ff6738",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });
 

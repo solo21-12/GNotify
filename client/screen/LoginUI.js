@@ -57,7 +57,9 @@ const LoginScreen = ({ navigation }) => {
         const userId = data.userId;
         const email = data.email;
 
-        await AsyncStorage.setItem("accessToken", accessToken);
+        const storedAccessToken = await AsyncStorage.getItem("accessToken");
+        console.log("Stored AccessToken:", storedAccessToken);
+        
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
@@ -66,14 +68,12 @@ const LoginScreen = ({ navigation }) => {
           payload: { user: userId},
         });
 
-        // Store the access token and user id in a secure way (e.g., AsyncStorage)
-        // For simplicity, we'll use alert to display the received data
-        alert(
-          `Login Successful!\nUser ID: ${userId}\nAccess Token: ${accessToken}`
-        );
+        // alert(
+        //   `Login Successful!\nUser ID: ${userId}\nAccess Token: ${accessToken}`
+        // );
 
         // Redirect to the home screen or any other screen upon successful login
-        navigation.navigate("Profile");
+        navigation.navigate("HomeStack");
       } else {
         console.error("Invalid email or password. Please try again.");
         alert("Invalid email or password. Please try again.");
@@ -114,7 +114,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Text style={styles.registerText}>
         If you don't have an account.{" "}
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <TouchableOpacity onPress={() => navigation.navigate("RegistrationScreen")}>
           <Text style={styles.linkText}>Register</Text>
         </TouchableOpacity>
       </Text>

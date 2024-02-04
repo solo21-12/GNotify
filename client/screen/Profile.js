@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { View, Text, StyleSheet,ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import axios from 'axios';
 const ProfileScreen = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -54,19 +54,26 @@ const ProfileScreen = () => {
     }
   };
 
-  const fetchUserInfo = async (userId) => {
+  const fetchUserInfo = async (userId, accessToken) => {
     try {
-      const apiUrl = `https://localhost:7138/api/Authentication/user/${userId}`
+      console.log('Access Token:', accessToken);
+      const ui = "fdcb7183-c0b0-4978-8c01-b89031f79cbf"
+      const apiUrl = `https://localhost:7138/api/Authentication/user/${ui}`;
+      const ac = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhOTI5OWJhMi05MTgzLTQ0ZjctYmE5Ny1iYzNhZjAxZTVjY2IiLCJzdWIiOiJmZGNiNzE4My1jMGIwLTQ5NzgtOGMwMS1iODkwMzFmNzljYmYiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiZXhwIjoxNzA3MDc5ODA3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTM4In0.FiSvtsYjCw0QqsWBmmvbneyjzZts9Sx5ClE6AsEvaLY"
       const response = await axios.get(apiUrl, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`, // Include the access token in the headers
+          'Authorization': `Bearer ${ac}`,
           'Content-Type': 'application/json',
         },
       });
   
       return response;
     } catch (error) {
-      console.error('Error fetching user information:', error);
+      if (error.response && error.response.status === 401) {
+        console.error('Unauthorized: Access token may be expired or invalid.');
+      } else {
+        console.error('Error fetching user information:', error);
+      }
       throw error;
     }
   };
@@ -98,7 +105,7 @@ const ProfileScreen = () => {
 
   const handleLogout = () => {
     // Add your logout logic here
-    console.log('Logged out');
+    navigation.navigate("LoginScreen");
   };
 
 

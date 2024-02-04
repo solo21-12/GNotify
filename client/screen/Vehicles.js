@@ -1,16 +1,27 @@
 // VehiclesScreen.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const VehiclesScreen = () => {
   const navigation = useNavigation();
 
-  const [vehicles, setVehicles] = useState([
-    { id: 1, name: 'Car A', model: 'Model X', plateNumber: 'ABC123' },
-    { id: 2, name: 'Car B', model: 'Model Y', plateNumber: 'XYZ789' },
-    // Add more vehicles as needed
-  ]);
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect((userId) => {
+    // Fetch data from the API when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://localhost:7269/api/UserVehicle/fdcb7183-c0b0-4978-8c01-b89031f79cbf`);
+        setVehicles(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures useEffect runs only once on component mount
 
   const handleVehiclePress = (vehicle) => {
     // Navigate to the details screen or perform other actions

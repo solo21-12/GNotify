@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ const AddVehicleScreen = () => {
     vehiclePlateNumber: "",
     vehicleRenewalDate: new Date(),
     roadFundRenewalDate: new Date(),
+    otherDocumentRenewalDate: new Date(),
   });
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
@@ -49,61 +51,54 @@ const AddVehicleScreen = () => {
     return selectedDate ? selectedDate.toLocaleDateString() : `Select ${dateType}`;
   };
 
-  const simulateSuccessfulResponse = () => {
-    // Simulate a successful response with a delay
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ ok: true });
-      }, 1000); // Simulate a delay of 1 second
-    });
-  };
-
   const handleAddVehicle = async () => {
     try {
-      // Prepare the data to send
       const requestData = {
         id: idCounter + 1,
         vehiclePlateNumber: vehicleData.vehiclePlateNumber,
-        vehicleRenewalDate: vehicleData.vehicleRenewalDate.toISOString(), // Convert to ISO string
+        vehicleRenewalDate: vehicleData.vehicleRenewalDate.toISOString(),
         roadFundRenewalDate: vehicleData.roadFundRenewalDate.toISOString(),
-        // Add other fields as needed
+        boloRenewalDate: vehicleData.otherDocumentRenewalDate.toISOString(),
       };
   
-      // Simulate a successful response
-      const response = await simulateSuccessfulResponse();
-
-      // const response = await fetch('YOUR_BACKEND_API_ENDPOINT', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(requestData),
-      // });
+      const response = await fetch("https://localhost:7269/api/vehicle", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
   
       if (response.ok) {
-        // Backend successfully received the data
-        alert('Vehicle added successfully!' + requestData.roadFundRenewalDate);
+        const responseData = await response.json();
+  
+        // Assuming your backend sends the VehicleId and other details in the response
+        const { VehicleId, PlateNumber, InsuranceRenewalDate, BoloRenewalData, RoadFundRenewalData } = responseData;
+  
+        // Update UI or show a success message
+        alert(`Vehicle added successfully!\nVehicle ID: ${VehicleId}\nPlate Number: ${PlateNumber}`);
+  
+        // Increment ID counter for the next entry
+        setIdCounter((prevId) => prevId + 1);
+  
+        // Reset other data for the next entry
+        setVehicleData({
+          id: idCounter + 2,
+          vehiclePlateNumber: "",
+          vehicleRenewalDate: new Date(),
+          roadFundRenewalDate: new Date(),
+          otherDocumentRenewalDate: new Date(),
+        });
       } else {
         // Handle error case
         alert('Failed to add vehicle. Please try again.');
       }
-  
-      // Increment ID counter for the next entry
-      setIdCounter((prevId) => prevId + 1);
-  
-      // Reset other data for the next entry
-      setVehicleData({
-        id: idCounter + 2,
-        vehiclePlateNumber: "",
-        vehicleRenewalDate: new Date(),
-        roadFundRenewalDate: new Date(),
-        otherDocumentRenewalDate: new Date(),
-      });
     } catch (error) {
       console.error('Error adding vehicle:', error);
       alert('An error occurred. Please try again.');
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -142,6 +137,7 @@ const AddVehicleScreen = () => {
         onCancel={hideDatePicker}
       />
 
+      {/* Date Input for Road Fund Renewal */}
       <View style={styles.dateInputContainer}>
         <Text style={styles.label}>Road Fund Last Paid Date</Text>
         <TouchableOpacity
@@ -158,13 +154,14 @@ const AddVehicleScreen = () => {
         </TouchableOpacity>
       </View>
 
+      {/* Date Input for Other Document Renewal */}
       <View style={styles.dateInputContainer}>
         <Text style={styles.label}>Bolo Renewal Last Paid Date</Text>
         <TouchableOpacity
           style={styles.datePickerButton}
-          onPress={() => showDatePicker("roadFundRenewalDate")}
+          onPress={() => showDatePicker("otherDocumentRenewalDate")}
         >
-          <Text>{renderDateText("roadFundRenewalDate")}</Text>
+          <Text>{renderDateText("otherDocumentRenewalDate")}</Text>
           <FontAwesome5
             name="calendar-alt"
             size={20}
@@ -176,6 +173,9 @@ const AddVehicleScreen = () => {
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddVehicle}>
         <Text style={styles.addButtonText}>Add Vehicle</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("HomeScreen")}>
+        <Text style={styles.addButtonText}> ← Get Back</Text>
       </TouchableOpacity>
     </View>
   );
