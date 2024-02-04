@@ -2831,19 +2831,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Fita Wegene\\.nuget\\packages\\": {}
+    "/home/dawit/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\react-native\\GNotify\\gNotifyAuthenticationService\\gNotifyAuthenticationService.csproj",
+      "projectUniqueName": "/home/dawit/projects/current/Gnotify/gNotifyAuthenticationService/gNotifyAuthenticationService.csproj",
       "projectName": "gNotifyAuthenticationService",
-      "projectPath": "D:\\react-native\\GNotify\\gNotifyAuthenticationService\\gNotifyAuthenticationService.csproj",
-      "packagesPath": "C:\\Users\\Fita Wegene\\.nuget\\packages\\",
-      "outputPath": "D:\\react-native\\GNotify\\gNotifyAuthenticationService\\obj\\",
+      "projectPath": "/home/dawit/projects/current/Gnotify/gNotifyAuthenticationService/gNotifyAuthenticationService.csproj",
+      "packagesPath": "/home/dawit/.nuget/packages/",
+      "outputPath": "/home/dawit/projects/current/Gnotify/gNotifyAuthenticationService/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Fita Wegene\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/dawit/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -2906,29 +2906,10 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.25, 6.0.25]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.25, 6.0.25]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.25, 6.0.25]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.25, 6.0.25]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2937,7 +2918,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.126/RuntimeIdentifierGraph.json"
       }
     }
   },

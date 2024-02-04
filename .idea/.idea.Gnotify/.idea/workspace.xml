@@ -7,7 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c4e90e0-98b1-4a99-b15c-ac81da853602" name="Changes" comment="" />
+    <list default="true" id="9c4e90e0-98b1-4a99-b15c-ac81da853602" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Gnotify/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Gnotify/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/gNotifyAuthenticationService/obj/Debug/net6.0/gNotifyAuthenticationService.csproj.AssemblyReference.cache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,27 +33,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dawit/projects/current/Gnotify&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/dawit/projects/current/Gnotify/gNotifyNotificationService",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/home/dawit/.config/JetBrains/Rider2023.3/resharper-host/DecompilerCache&quot;,
-      &quot;/home/dawit/.config/JetBrains/Rider2023.3/resharper-host/SourcesCache&quot;,
-      &quot;/home/dawit/.local/share/Symbols/src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/home/dawit/.config/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
+      "/home/dawit/.config/JetBrains/Rider2023.3/resharper-host/SourcesCache",
+      "/home/dawit/.local/share/Symbols/src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="gNotify-server: gNotify_server" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/gNotifyAuthenticationService/gNotifyAuthenticationService.csproj" />
@@ -80,7 +83,7 @@
       <workItem from="1706904612941" duration="315000" />
       <workItem from="1706905525158" duration="1829000" />
       <workItem from="1706961045796" duration="5849000" />
-      <workItem from="1706993873630" duration="505000" />
+      <workItem from="1706993873630" duration="954000" />
     </task>
     <servers />
   </component>

@@ -57,8 +57,7 @@ public class AuthenticationService
         claims: claim,
         expires: expires,
         signingCredentials: signingCredentials,
-        issuer:issuer,
-        audience:"https://localhost:7138"
+        issuer:issuer
        );
        return new LoginResponse
        {
@@ -156,6 +155,33 @@ public class AuthenticationService
       }
 
       return new ProfileUpdateResponse { Message = "Invalid user id", Success = false };
+     }
+
+     public async Task<User> Get(string id)
+     {
+      var user = await _userManager.FindByIdAsync(id);
+
+      if (user is not null)
+      {
+       return new User
+       {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            MiddleName = user.MiddleName,
+            Gender = user.Gender,
+            PhoneNumber = user.PhoneNumber,
+            Email = user.Email,
+            Message = "User found successfully",
+            Success = true
+       };
+      }
+
+      return new User
+      {
+       Success = false,
+       Message = "User not found"
+      };
+
      }
 
 }

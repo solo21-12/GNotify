@@ -1,4 +1,5 @@
 using gNotifyVehicleService.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gNotifyVehicleService.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ public class UserVehicleController:ControllerBase
         _vehicleServices = vehicleServices;
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(string id)
     {
