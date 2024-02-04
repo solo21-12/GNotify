@@ -32,6 +32,9 @@
         "projectId": "f634fc69-b671-4604-91a4-6bdd0a6f9386"
       }
     },
-    "owner": "fita_w"
+    "owner": "fita_w",
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

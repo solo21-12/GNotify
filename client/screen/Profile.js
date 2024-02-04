@@ -1,24 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, StyleSheet,ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const ProfileScreen = () => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [firstName, setFirstName] = useState('John');
-  const [middleName, setMiddleName] = useState('Doe');
-  const [lastName, setLastName] = useState('Smith');
-  const [gender, setGender] = useState('Male');
-  const [email, setEmail] = useState('john.doe@example.com');
-  const [phoneNumber, setPhoneNumber] = useState('123-456-7890');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  
 
-  const handleEditProfile = () => {
+  useEffect(() => {
+    // Fetch user data from local storage when the component mounts
+    fetchAccessToken();
+  }, []);
+
+  
+  const fetchAccessToken = async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      
+      if (accessToken) {
+        const [header, payload, signature] = accessToken.split('.');
+        
+        const decodedPayload = JSON.parse(atob(payload)); // Decode base64 payload
+        
+        // Use the decoded payload to access user information
+        console.log('Decoded Payload:', decodedPayload);
+
+        // Fetch additional user information using the decoded user id
+        const userInfoResponse = await fetchUserInfo(decodedPayload.sub);
+
+        if (userInfoResponse.status === 200) {
+          const userInfo = userInfoResponse.data;
+          // Update state with user information
+          setFirstName(userInfo.firstName);
+          setMiddleName(userInfo.middleName);
+          setLastName(userInfo.lastName);
+          setGender(userInfo.gender);
+          setEmail(userInfo.email);
+          setPhoneNumber(userInfo.phoneNumber);
+        } else {
+          console.error('Error fetching user information:', userInfoResponse.data);
+        }
+      } else {
+        console.error('Access token not found.');
+      }
+    } catch (error) {
+      console.error('Error fetching access token:', error);
+    }
+  };
+
+  const fetchUserInfo = async (userId, accessToken) => {
+    try {
+      console.log('Access Token:', accessToken);
+      const ui = "fdcb7183-c0b0-4978-8c01-b89031f79cbf"
+      const apiUrl = `https://localhost:7138/api/Authentication/user/${ui}`;
+      const ac = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhOTI5OWJhMi05MTgzLTQ0ZjctYmE5Ny1iYzNhZjAxZTVjY2IiLCJzdWIiOiJmZGNiNzE4My1jMGIwLTQ5NzgtOGMwMS1iODkwMzFmNzljYmYiLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiZXhwIjoxNzA3MDc5ODA3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTM4In0.FiSvtsYjCw0QqsWBmmvbneyjzZts9Sx5ClE6AsEvaLY"
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${ac}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      return response;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.error('Unauthorized: Access token may be expired or invalid.');
+      } else {
+        console.error('Error fetching user information:', error);
+      }
+      throw error;
+    }
+  };
+  
+  
+
+  const handleEditProfile = async () => {
+    // Save user data to local storage when in edit mode
+    if (isEditMode) {
+      const userData = {
+        firstName,
+        middleName,
+        lastName,
+        gender,
+        email,
+        phoneNumber,
+      };
+
+      try {
+        await AsyncStorage.setItem('accessToken', JSON.stringify(userData));
+        console.log('User data saved successfully');
+      } catch (error) {
+        console.error('Error saving user data:', error);
+      }
+    }
+
     setIsEditMode(!isEditMode);
   };
 
   const handleLogout = () => {
     // Add your logout logic here
-    console.log('Logged out');
+    navigation.navigate("LoginScreen");
   };
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -108,7 +197,7 @@ const styles = StyleSheet.create({
   },
   profileItem: {
     flexDirection: 'row',
-    alignItems: 'flex-start', // Adjusted alignItems to flex-start
+    alignItems: 'flex-start', 
     marginBottom: 15,
   },
   icon: {
@@ -116,7 +205,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginLeft: 10, // Added marginLeft to create space between icon and text
+    marginLeft: 10,
   },
   label: {
     fontSize: 20,

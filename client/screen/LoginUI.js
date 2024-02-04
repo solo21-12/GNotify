@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import CustomInput from "../component/InputField";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const { dispatch } = useAuth();
@@ -53,24 +54,26 @@ const LoginScreen = ({ navigation }) => {
       if (response.status === 200) {
         const data = response.data;
         const accessToken = data.accessToken;
-        console.log("response ok 2")
         const userId = data.userId;
-        console.log("response ok 3")
         const email = data.email;
-        console.log("response ok 4")
+
+        const storedAccessToken = await AsyncStorage.getItem("accessToken");
+        console.log("Stored AccessToken:", storedAccessToken);
+        
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
         dispatch({
           type: "LOGIN",
-          payload: { user: userId, accessToken },
+          payload: { user: userId},
         });
 
-        // Store the access token and user id in a secure way (e.g., AsyncStorage)
-        // For simplicity, we'll use alert to display the received data
-        alert(
-          `Login Successful!\nUser ID: ${userId}\nAccess Token: ${accessToken}`
-        );
+        // alert(
+        //   `Login Successful!\nUser ID: ${userId}\nAccess Token: ${accessToken}`
+        // );
 
         // Redirect to the home screen or any other screen upon successful login
-        navigation.navigate("Home");
+        navigation.navigate("HomeStack");
       } else {
         console.error("Invalid email or password. Please try again.");
         alert("Invalid email or password. Please try again.");
@@ -111,7 +114,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Text style={styles.registerText}>
         If you don't have an account.{" "}
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <TouchableOpacity onPress={() => navigation.navigate("RegistrationScreen")}>
           <Text style={styles.linkText}>Register</Text>
         </TouchableOpacity>
       </Text>
