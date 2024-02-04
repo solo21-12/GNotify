@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "bG2PgzYpAkrRblHyQtNU26/4tvWx/mfyKny3mnFfcNw=",
+  "Source": "gNotifyNotificationService",
+  "BasePath": "_content/gNotifyNotificationService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

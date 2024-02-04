@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4eb+TjAnUky+h9DDSJNTS2uUYq+p+HA9QQ6VGwi+zYI=",
+  "Source": "gNotifyVehicleService",
+  "BasePath": "_content/gNotifyVehicleService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

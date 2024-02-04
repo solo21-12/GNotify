@@ -1,0 +1,20 @@
+{
+    "Routes": [
+      {
+        "DownstreamPathTemplate": "/api/UserVehicle/{id}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 7269
+          }
+        ],
+        "UpstreamPathTemplate": "/api/UserVehicle/{id}",
+        "UpstreamHttpMethod": [ "GET" ]
+      }
+    ],
+    "GlobalConfiguration": {
+      "BaseUrl": "https://localhost:7285"
+    }
+  }
+  
