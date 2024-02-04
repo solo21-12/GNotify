@@ -28,7 +28,7 @@ BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(MongoDB.Bson.Bson
 var mongoDbIdentityConfig = new MongoDbIdentityConfiguration {
     MongoDbSettings = new MongoDbSettings
     {
-        ConnectionString = "mongodb://root:rootpassword@localhost:27017",
+        ConnectionString = "mongodb://root:rootpassword@localhost:27018",
         DatabaseName = "gNotify"
     },
     IdentityOptionsAction = options =>
@@ -77,9 +77,9 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("Mobile Apps", policyBuilder =>
+    options.AddPolicy("MobileApps", policyBuilder =>
     {
-        policyBuilder.WithOrigins("http://localhost:3000");
+        policyBuilder.WithOrigins("http://localhost:8081/");
         policyBuilder.AllowCredentials();
         policyBuilder.AllowAnyHeader();
         policyBuilder.AllowAnyMethod();
@@ -100,6 +100,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("MobileApps");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

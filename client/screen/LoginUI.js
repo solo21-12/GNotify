@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import CustomInput from "../component/InputField"; // Import the CustomInput component
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import CustomInput from "../component/InputField";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
+  const { dispatch } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleLogin = () => {
-    // Email format validation using regex
+  const handleLogin = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validation for empty fields
     if (!email.trim()) {
       setEmailError("Email is required");
       return;
@@ -36,16 +32,52 @@ const LoginScreen = () => {
       setPasswordError("");
     }
 
-    // Dummy data for demonstration
-    const dummyEmail = "user@example.com";
-    const dummyPassword = "password123";
+    console.log("Before fetch");
 
-    if (email === dummyEmail && password === dummyPassword) {
-      // Redirect to the home screen or any other screen upon successful login
-      alert("correct email or password. next page is under development");
-    } else {
-      // Handle login error, display a message to the user, etc.
-      alert("Invalid email or password. Please try again.");
+    // Replace the following with actual API endpoint and credentials
+    const apiUrl = "https://localhost:7138/api/Authentication/login";
+    const apiCredentials = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      console.log("Before API call");
+      const response = await axios.post(apiUrl, apiCredentials, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+
+      if (response.status === 200) {
+        const data = response.data;
+        const accessToken = data.accessToken;
+        console.log("response ok 2")
+        const userId = data.userId;
+        console.log("response ok 3")
+        const email = data.email;
+        console.log("response ok 4")
+        dispatch({
+          type: "LOGIN",
+          payload: { user: userId, accessToken },
+        });
+
+        // Store the access token and user id in a secure way (e.g., AsyncStorage)
+        // For simplicity, we'll use alert to display the received data
+        alert(
+          `Login Successful!\nUser ID: ${userId}\nAccess Token: ${accessToken}`
+        );
+
+        // Redirect to the home screen or any other screen upon successful login
+        navigation.navigate("Home");
+      } else {
+        console.error("Invalid email or password. Please try again.");
+        alert("Invalid email or password. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert(`Error during login: ${error.message}`);
     }
   };
 
@@ -54,7 +86,6 @@ const LoginScreen = () => {
       <Image source={require("../assets/logo.png")} style={styles.image} />
       <Text style={styles.title}>Login</Text>
 
-      {/* Use CustomInput for Email */}
       <CustomInput
         value={email}
         onChangeText={(text) => setEmail(text)}
@@ -62,7 +93,6 @@ const LoginScreen = () => {
         error={emailError}
       />
 
-      {/* Use CustomInput for Password */}
       <CustomInput
         value={password}
         onChangeText={(text) => setPassword(text)}
@@ -81,7 +111,7 @@ const LoginScreen = () => {
 
       <Text style={styles.registerText}>
         If you don't have an account.{" "}
-        <TouchableOpacity onPress={() => alert("Redirect to Register page")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={styles.linkText}>Register</Text>
         </TouchableOpacity>
       </Text>
@@ -122,40 +152,46 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     alignSelf: "center",
-    borderRadius:10,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: "gray",
   },
-  loginScreenButton:{
+  loginScreenButton: {
     width: "80%",
-    margin:10,
-    paddingTop:10,
-    paddingBottom:10,
-    backgroundColor:'#ff6738',
-    borderRadius:10,
+    margin: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#ff6738",
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: "#fff",
     alignSelf: "center",
-
   },
-  loginText:{
-      color:'#fff',
-      textAlign:'center',
-      paddingLeft : 10,
-      paddingRight : 10
+  loginText: {
+    color: "#fff",
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   registerText: {
     fontSize: 16,
     color: "#000",
     textAlign: "center",
     marginTop: 30,
-
   },
   linkText: {
     fontSize: 16,
     color: "#ff6738",
     fontWeight: "bold",
     textDecorationLine: "underline",
+  },
+  linkContainer: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  loginButtonContainer: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });
 
