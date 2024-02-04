@@ -1,30 +1,62 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // Import the new Picker
+import { Picker } from '@react-native-picker/picker';
+import axios from 'axios';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [gender, setGender] = useState('Male');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleRegistration = () => {
-    // You can perform registration logic here
-    console.log('Registration Data:', {
-      firstName,
-      middleName,
-      lastName,
-      email,
-      phone,
-      gender,
-    });
+  const handleRegistration = async () => {
+    const apiUrl = 'https://localhost:7138/api/Authentication/register';
+
+    try {
+      const registrationData = {
+        email,
+        firstName,
+        middleName,
+        lastName,
+        phoneNumber: phone,
+        gender,
+        password,
+        confirmPassword,
+      };
+
+      const response = await axios.post(apiUrl, registrationData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Registration successful:', response.data);
+        // Optionally, you can navigate to the login screen or any other screen upon successful registration
+        navigation.navigate('Login');
+      } else {
+        console.error('Registration failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error during registration:', error.message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Registration</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
 
       <TextInput
         style={styles.input}
@@ -49,14 +81,6 @@ const RegistrationScreen = () => {
 
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        style={styles.input}
         placeholder="Phone"
         value={phone}
         onChangeText={setPhone}
@@ -72,6 +96,22 @@ const RegistrationScreen = () => {
         <Picker.Item label="Male" value="Male" />
         <Picker.Item label="Female" value="Female" />
       </Picker>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+      />
 
       <TouchableOpacity style={styles.registerButton} onPress={handleRegistration}>
         <Text style={styles.registerButtonText}>Register</Text>
