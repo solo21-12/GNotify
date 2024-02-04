@@ -86,13 +86,13 @@ public class AuthenticationService
        var userExist = await _userManager.FindByEmailAsync(requestDto.Email);
        
      
-       if (userExist != null)
+       if (userExist is not null)
        {
-        return new RegisterResponse()
-        {
-         Message = "user already exist",
-         Success = false
-        };
+          return new RegisterResponse()
+          {
+          Message = "user already exist",
+          Success = false
+          };
        }
      
        userExist = new ApplicationUser
@@ -139,7 +139,7 @@ public class AuthenticationService
      {
       var user = await _userManager.FindByIdAsync(profileUpdateRequest.Id);
 
-      if (user != null)
+      if (user is not null)
       {
        user.PhoneNumber = profileUpdateRequest.PhoneNumber;
        user.FirstName = profileUpdateRequest.FirstName;
