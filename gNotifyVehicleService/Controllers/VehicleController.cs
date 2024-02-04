@@ -2,6 +2,7 @@ using System.Net;
 using gNotifyVehicleService.Dto;
 using gNotifyVehicleService.Models;
 using gNotifyVehicleService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -19,7 +20,7 @@ public class VehicleController:ControllerBase
         _vehicleServices = vehicleServices;
     }
 
-    
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(string id)
     {
@@ -32,7 +33,7 @@ public class VehicleController:ControllerBase
         return NotFound();
     }
 
-    
+    [Authorize]
     [HttpPost]
     [ProducesResponseType((int) HttpStatusCode.OK,Type = typeof(VehicleRegisterResponse))]
     public async Task<IActionResult> Post([FromBody] VehicleRegisterRequest vehicle)
@@ -51,7 +52,8 @@ public class VehicleController:ControllerBase
         await _vehicleServices.CreateVehicle(newVehicle);
         return CreatedAtAction(nameof(Get), new{id = newVehicle.VehicleId}, newVehicle);
     }
-
+    
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> Put([FromBody] VehicleUpdateRequest vehicle, string id)
     {
@@ -76,6 +78,7 @@ public class VehicleController:ControllerBase
         return NoContent();
     }
     
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete( string id)
     {

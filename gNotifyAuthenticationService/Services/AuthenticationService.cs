@@ -57,8 +57,7 @@ public class AuthenticationService
         claims: claim,
         expires: expires,
         signingCredentials: signingCredentials,
-        issuer:issuer,
-        audience:"https://localhost:7138"
+        issuer:issuer
        );
        return new LoginResponse
        {
